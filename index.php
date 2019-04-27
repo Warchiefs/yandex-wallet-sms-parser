@@ -1,14 +1,12 @@
 <?php
 
-require_once ("YandexWalletSmsParser.php");
+require_once("YandexWalletSmsParser.php");
 
-$text =
-    "Пароль: 9823
-Спишется 10035,03р.
+$smsMessage = "Пароль: 9823
+Спишется 1005,03р.
 Перевод на счет 410013949644723";
 
-$parser = new YandexWalletSmsParser();
-$response = $parser->parse($text);
+$parser = new YandexWalletSmsParser($smsMessage);
+$response = $parser->parse();
 
-
-print_r ($response);
+print_r($response);

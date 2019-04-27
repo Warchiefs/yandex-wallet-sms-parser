@@ -1,5 +1,4 @@
 <?php
-require_once ("Exceptions/UnavailableText.php");
 
 class YandexWalletSmsParser
 {
@@ -16,10 +15,21 @@ class YandexWalletSmsParser
     const WALLET_KEY = 'receiver';
     const WALLET_PATTERN = '/41001[\d]{8,10}/';
 
-    public function parse($text)
+    /**
+     * YandexWalletSmsParser constructor.
+     *
+     * @param $text
+     */
+    public function __construct(string $text)
     {
         $this->text = $text;
+    }
 
+    /**
+     * @return array
+     */
+    public function parse(): array
+    {
         return [
             self::SUM_KEY => $this->parseSum(),
             self::WALLET_KEY => $this->parseWallet(),
@@ -28,22 +38,31 @@ class YandexWalletSmsParser
         ];
     }
 
-    protected function parseSmsCode()
+    /**
+     * @return null|string
+     */
+    protected function parseSmsCode(): ?string
     {
         preg_match(self::SMS_CODE_PATTERN, $this->text, $matches);
-        return $matches[0];
+        return $matches[0] ?? null;
     }
 
-    protected function parseSum()
+    /**
+     * @return null|string
+     */
+    protected function parseSum(): ?string
     {
         preg_match(self::SUM_PATTERN, $this->text, $matches);
-        return $matches[0];
+        return $matches[0] ?? null;
     }
 
-    protected function parseWallet()
+    /**
+     * @return null|string
+     */
+    protected function parseWallet(): ?string
     {
         preg_match(self::WALLET_PATTERN, $this->text, $matches);
-        return $matches[0];
+        return $matches[0] ?? null;
     }
 
 }
